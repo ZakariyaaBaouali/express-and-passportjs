@@ -3,6 +3,10 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "../config";
 import { Strategy as LocalStrategy } from "passport-local";
 
+interface IUser {
+  email: string;
+}
+
 export const initializePassport = () => {
   //google
   passport.use(
@@ -39,12 +43,18 @@ export const initializePassport = () => {
 
   passport.serializeUser((user, done) => {
     console.log("inside user serialize");
-    done(null, user);
+    //user --> is profile for google
+    //user --> is user obj for local
+    const userLogined = <IUser>user;
+    console.log(`User email is : ${userLogined.email}`);
+    done(null, userLogined.email);
   });
 
-  passport.deserializeUser((id, done) => {
+  passport.deserializeUser((email, done) => {
     console.log("inside user deserialize");
-    const user = { id };
+    //for local this id will be the email
+    console.log(email);
+    const user = { email };
     done(null, user);
   });
 };
