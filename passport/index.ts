@@ -8,7 +8,7 @@ export const initializePassport = () => {
       {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:8080/auth/google/redirect",
+        callbackURL: "http://localhost:8080/auth/google/callback",
       },
       (accessToken, refreshToken, profile, done) => {
         console.log(accessToken);

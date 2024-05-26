@@ -3,6 +3,7 @@ import cookie from "cookie-session";
 import { COOKIE_SECRET_KEY, PORT } from "./config";
 import passport from "passport";
 import { initializePassport } from "./passport";
+import authController from "./controllers/auth.controller";
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 initializePassport();
+
+app.use("/auth", authController);
 
 app.listen(PORT, () =>
   console.log(`Server running successfully on port ${PORT} 🚀🚀🚀`)
