@@ -1,11 +1,10 @@
 import express, { urlencoded } from "express";
-import env from "dotenv";
 import cookie from "cookie-session";
 import { COOKIE_SECRET_KEY, PORT } from "./config";
 import passport from "passport";
+import { initializePassport } from "./passport";
 
 const app = express();
-env.config();
 
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
@@ -18,6 +17,8 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+initializePassport();
 
 app.listen(PORT, () =>
   console.log(`Server running successfully on port ${PORT} 🚀🚀🚀`)
