@@ -42,4 +42,15 @@ route.get(
   }
 );
 
+route.post(
+  "/login",
+  passport.authenticate("local"),
+  (req: Request, res: Response) => {
+    console.log("Local was here 🚀🚀" + req.user);
+    const CLIENT_SUCCESS_PATH = `${CLIENT_URI}/auth/success`;
+    console.log(CLIENT_SUCCESS_PATH);
+    return res.status(200).redirect(CLIENT_SUCCESS_PATH);
+  }
+);
+
 export default route;
