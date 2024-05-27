@@ -20,7 +20,14 @@ export const initializePassport = () => {
         console.log(accessToken);
         console.log(refreshToken);
         console.log(profile);
-        done(null, profile);
+        let myemail = "";
+        if (profile.emails) {
+          myemail = profile.emails[0].value;
+        }
+        const user: IUser = {
+          email: myemail,
+        };
+        done(null, user);
       }
     )
   );
@@ -32,8 +39,8 @@ export const initializePassport = () => {
         usernameField: "email",
       },
       (username, password, done) => {
-        console.log(`Email : ${username} 🚀🚀`);
-        console.log(`Password : ${password} 🚀🚀`);
+        // console.log(`Email : ${username} 🚀🚀`);
+        // console.log(`Password : ${password} 🚀🚀`);
         done(null, { email: username, password });
       }
     )
@@ -42,18 +49,19 @@ export const initializePassport = () => {
   //jwt
 
   passport.serializeUser((user, done) => {
-    console.log("inside user serialize");
+    console.log(`We serialize the User 🔥🔥🔥`);
     //user --> is profile for google
     //user --> is user obj for local
+    console.log(user);
     const userLogined = <IUser>user;
     console.log(`User email is : ${userLogined.email}`);
     done(null, userLogined.email);
   });
 
   passport.deserializeUser((email, done) => {
-    console.log("inside user deserialize");
+    console.log(`We deserialize the User 🚀🚀🚀`);
     //for local this id will be the email
-    console.log(email);
+    console.log(`Des User email is : ${email}`);
     const user = { email };
     done(null, user);
   });
